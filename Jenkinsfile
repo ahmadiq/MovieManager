@@ -31,7 +31,6 @@ def envStage = utils.environmentNamespace('stage')
 def envProd = utils.environmentNamespace('run')
 def stashName = ""
 def deploy = false
-def sonarServer = "${env.SONAR_HOST_URL ?: 'http://localhost:9000'}"
 
 // TODO # 1 : use different profile dev or prod
 // TODO # 2 : use config maps
@@ -62,8 +61,8 @@ mavenNode(mavenImage: 'openjdk:8') {
         stage('SonarQube analysis') {
           withSonarQubeEnv('sonarqube') {
             // requires SonarQube Scanner for Maven 3.2+
-            echo 'sonarqube url is ${sonarServer}'
-            sh "./mvnw -X -Dsonar.host.url=${sonarServer} org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar"
+            echo 'sonarqube url is ${env.SONAR_HOST_URL}'
+            sh "./mvnw -X -Dsonar.host.url=${env.SONAR_HOST_URL} org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar"
           }
         }
 
