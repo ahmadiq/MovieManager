@@ -45,18 +45,18 @@ mavenNode(mavenImage: 'openjdk:8') {
             checkout scm
         }
 
-//        stage("clean") {
-//            sh 'chmod +x mvnw'
-//            sh './mvnw clean'
-//        }
+        stage("clean") {
+            sh 'chmod +x mvnw'
+            sh './mvnw clean'
+        }
 
-//        stage('install tools') {
-//            sh './mvnw com.github.eirslett:frontend-maven-plugin:install-node-and-yarn -DnodeVersion=v6.11.1 -DyarnVersion=v0.27.5'
-//        }
+        stage('install tools') {
+            sh './mvnw com.github.eirslett:frontend-maven-plugin:install-node-and-yarn -DnodeVersion=v6.11.1 -DyarnVersion=v0.27.5'
+        }
 
-//        stage('yarn install') {
-//            sh './mvnw com.github.eirslett:frontend-maven-plugin:yarn'
-//        }
+        stage('yarn install') {
+            sh './mvnw com.github.eirslett:frontend-maven-plugin:yarn'
+        }
 
         stage('SonarQube analysis') {
           withSonarQubeEnv('sonarqube') {
@@ -65,19 +65,19 @@ mavenNode(mavenImage: 'openjdk:8') {
           }
         }
 
-//        stage('Canary Release'){
-//            mavenCanaryRelease {
-//              version = canaryVersion
-//            }
-//        }
+        stage('Canary Release'){
+            mavenCanaryRelease {
+              version = canaryVersion
+            }
+        }
 
-//        stage('Integration Testing') {
-//            mavenIntegrationTest {
-//              environment = 'Test'
-//              failIfNoTests = localFailIfNoTests
-//              itestPattern = localItestPattern
-//            }
-//        }
+        stage('Integration Testing') {
+            mavenIntegrationTest {
+              environment = 'Test'
+              failIfNoTests = localFailIfNoTests
+              itestPattern = localItestPattern
+            }
+        }
 
 //        stage('Rollout to Stage') {
 //            kubernetesApply(environment: envStage)
