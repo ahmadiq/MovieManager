@@ -79,17 +79,18 @@ mavenNode(mavenImage: 'openjdk:8') {
             }
         }
 
-//        stage('Rollout to Stage') {
-//            kubernetesApply(environment: envStage)
+        stage('Rollout to Stage') {
+            kubernetesApply(environment: envStage)
             // TODO: figure out why to stash deployments?
             // TODO: from where does the stash command comes?
             //stash deployments
-//            stashName = label
-//            stash includes: '**/*.yml', name: stashName
-//        }
+            stashName = label
+            stash includes: '**/*.yml', name: stashName
+        }
     }
 }
 
+// TODO: Ensure webhook for jenkins (http://jenkins/sonarqube-webhook/) is added in sonarqube
 // No need to occupy a node
 stage("Quality Gate"){
   timeout(time: 1, unit: 'HOURS') { // Just in case something goes wrong, pipeline will be killed after a timeout
