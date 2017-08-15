@@ -57,28 +57,26 @@ def deploy = false
 
 mavenNode(mavenImage: 'openjdk:8') {
 
-    ws ('pipelines'){
+//    ws ('pipelines'){
+    container(name: 'maven') {
 
         stage("checkout") {
             checkout scm
         }
-//git credentialsId: 'ahmadiqgit', url: 'git@github.com:ahmadiq/MovieMgr.git'
 
         stage("push") {
     sh "git remote set-url origin git@github.com:ahmadiq/MovieMgr.git"
-    sh "git config user.email admin@stakater.com"
-    sh "git config user.name stakater-release"
+//    sh "git config user.email admin@stakater.com"
+//    sh "git config user.name stakater-release"
 
     sh 'chmod 600 /root/.ssh-git/ssh-key'
     sh 'chmod 600 /root/.ssh-git/ssh-key.pub'
-//    sh 'cp /root/.ssh-git/ssh-key /root/.ssh/id_rsa'
-//    sh 'cp /root/.ssh-git/ssh-key.pub /root/.ssh/id_rsa.pub'
     sh 'chmod 700 /root/.ssh-git'
-//    sh 'chmod 700 /root/.ssh'
-//    sh 'cat /root/.ssh/config'
 
 
         sh "git tag -fa v${canaryVersion} -m 'Release version ${canaryVersion}'"
+        sh "git push origin v${canaryVersion}"
+        sh "git checkout -b ${canaryVersion}"
         sh "git push origin v${canaryVersion}"
         }
 
