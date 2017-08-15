@@ -68,8 +68,11 @@ git credentialsId: 'ahmadiqgit', url: 'git@github.com:ahmadiq/MovieMgr.git'
     sh "git remote set-url origin git@github.com:ahmadiq/MovieMgr.git"
     sh "git config user.email admin@stakater.com"
     sh "git config user.name stakater-release"
+    sh 'ls -lah /root/.ssh-git/'
     sh 'chmod 600 /root/.ssh-git/ssh-key'
+    sh 'cat /root/.ssh-git/ssh-key'
     sh 'chmod 600 /root/.ssh-git/ssh-key.pub'
+    sh 'cat /root/.ssh-git/ssh-key.pub'
     sh 'chmod 700 /root/.ssh-git'
         sh "git tag -fa v${canaryVersion} -m 'Release version ${canaryVersion}'"
         sh "git push origin v${canaryVersion}"
