@@ -77,7 +77,7 @@ mavenNode(mavenImage: 'openjdk:8') {
         sh "git tag -fa v${canaryVersion} -m 'Release version ${canaryVersion}'"
         sh "git push origin v${canaryVersion}"
         sh "git checkout -b ${canaryVersion}"
-        sh "git push origin v${canaryVersion}"
+        sh "git push origin ${canaryVersion}"
         }
 
 //        def release = load 'release.groovy'
