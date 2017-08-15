@@ -66,7 +66,7 @@ mavenNode(mavenImage: 'openjdk:8') {
 
         stage("push") {
     sh "git remote set-url origin git@github.com:ahmadiq/MovieMgr.git"
-    sh "git config user.email ahmad@aurorasolutions.io
+    sh "git config user.email ahmad@aurorasolutions.io"
     sh "git config user.name ahmadiq"
     sh 'ls -lah /root/.ssh-git/'
     sh 'ls -lah /root/.ssh/'
