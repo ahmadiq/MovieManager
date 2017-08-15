@@ -38,8 +38,6 @@ def deploy = false
 // TODO # 4 : run performance tests ( gatling ) and save stats
 // TODO # 5 : the artifacts should be archived & should be browse'able from Jenkins!
 
-def release = load 'release.groovy'
-
 mavenNode(mavenImage: 'openjdk:8') {
     container(name: 'maven') {
 
@@ -67,12 +65,12 @@ mavenNode(mavenImage: 'openjdk:8') {
 //          }
 //        }
 
-        stage('Canary Release'){
+//        stage('Canary Release'){
 //            mavenCanaryRelease {
 //              version = canaryVersion
 //            }
-            release.push(canaryVersion)
-        }
+//            release.push(canaryVersion)
+//        }
 
         stage('Integration Testing') {
             mavenIntegrationTest {
@@ -90,6 +88,20 @@ mavenNode(mavenImage: 'openjdk:8') {
             stashName = label
             stash includes: '**/*.yml', name: stashName
         }
+    }
+}
+
+clientsNode {
+    ws ('pipelines'){
+
+        stage("checkout") {
+            checkout scm
+        }
+
+        def release = load 'release.groovy'
+
+        stage 'release'
+        release.push(canaryVersion)
     }
 }
 
