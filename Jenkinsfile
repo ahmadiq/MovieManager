@@ -38,6 +38,8 @@ def deploy = false
 // TODO # 4 : run performance tests ( gatling ) and save stats
 // TODO # 5 : the artifacts should be archived & should be browse'able from Jenkins!
 
+def release = load 'release.groovy'
+
 mavenNode(mavenImage: 'openjdk:8') {
     container(name: 'maven') {
 
@@ -65,7 +67,6 @@ mavenNode(mavenImage: 'openjdk:8') {
 //          }
 //        }
 
-        def release = load 'release.groovy'
         stage('Canary Release'){
 //            mavenCanaryRelease {
 //              version = canaryVersion
