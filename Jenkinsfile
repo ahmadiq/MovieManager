@@ -45,7 +45,7 @@ clientsNode(clientsImage: 'fabric8/builder-clients:latest') {
         }
 }
 
-mavenNode(mavenImage: 'openjdk:8') {
+//mavenNode(mavenImage: 'openjdk:8') {
 
 //    ws ('pipelines'){
 
@@ -59,7 +59,7 @@ mavenNode(mavenImage: 'openjdk:8') {
 //        release.push(canaryVersion)
 //    }
 
-    container(name: 'maven') {
+//    container(name: 'maven') {
 
 //        stage("checkout") {
 //            checkout scm
@@ -109,8 +109,8 @@ mavenNode(mavenImage: 'openjdk:8') {
 //            stashName = label
 //            stash includes: '**/*.yml', name: stashName
 //        }
-    }
-}
+//    }
+//}
 
 
 // TODO: Ensure webhook for jenkins (http://jenkins/sonarqube-webhook/) is added in sonarqube
@@ -127,9 +127,6 @@ mavenNode(mavenImage: 'openjdk:8') {
 
 def push(version) {
 
-        stage("checkout") {
-            checkout scm
-        }
 
     def releaseVersion = version
 
@@ -142,10 +139,17 @@ def push(version) {
 
     container(name: 'clients') {
 
+        stage("checkout") {
+            checkout scm
+        }
+
 //    sh "git tag ${env.JOB_NAME}-${config.version}"
 //    sh "git push origin --tags"
 //        sh "git push origin ${env.JOB_NAME}-${config.version}"
+
+        stage("push") {
         sh "git tag -fa v${releaseVersion} -m 'Release version ${releaseVersion}'"
         sh "git push origin v${releaseVersion}"
+        }
     }
 }
