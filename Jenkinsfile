@@ -69,6 +69,7 @@ git credentialsId: 'ahmadiqgit', url: 'git@github.com:ahmadiq/MovieMgr.git'
     sh "git config user.email admin@stakater.com"
     sh "git config user.name stakater-release"
     sh 'ls -lah /root/.ssh-git/'
+    sh 'ls -lah /root/.ssh/'
     sh 'chmod 600 /root/.ssh-git/ssh-key'
     sh 'chmod 600 /root/.ssh-git/ssh-key.pub'
     sh 'chmod 700 /root/.ssh-git'
