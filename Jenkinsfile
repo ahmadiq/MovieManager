@@ -38,17 +38,30 @@ def deploy = false
 // TODO # 4 : run performance tests ( gatling ) and save stats
 // TODO # 5 : the artifacts should be archived & should be browse'able from Jenkins!
 
+clientsTemplate {
 mavenNode(mavenImage: 'openjdk:8') {
-    container(name: 'maven') {
+
+    ws ('pipelines'){
 
         stage("checkout") {
             checkout scm
         }
 
-        stage("clean") {
-            sh 'chmod +x mvnw'
-            sh './mvnw clean'
-        }
+        def release = load 'release.groovy'
+
+        stage 'release'
+        release.push(canaryVersion)
+    }
+    container(name: 'maven') {
+
+//        stage("checkout") {
+//            checkout scm
+//        }
+
+//        stage("clean") {
+//            sh 'chmod +x mvnw'
+//            sh './mvnw clean'
+//        }
 
 //        stage('install tools') {
 //            sh './mvnw com.github.eirslett:frontend-maven-plugin:install-node-and-yarn -DnodeVersion=v6.11.1 -DyarnVersion=v0.27.5'
@@ -91,18 +104,6 @@ mavenNode(mavenImage: 'openjdk:8') {
     }
 }
 
-clientsNode {
-    ws ('pipelines'){
-
-//        stage("checkout") {
-//            checkout scm
-//        }
-
-        def release = load 'release.groovy'
-
-        stage 'release'
-        release.push(canaryVersion)
-    }
 }
 
 // TODO: Ensure webhook for jenkins (http://jenkins/sonarqube-webhook/) is added in sonarqube
