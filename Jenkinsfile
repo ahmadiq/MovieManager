@@ -68,15 +68,14 @@ mavenNode(mavenImage: 'openjdk:8') {
     sh "git remote set-url origin git@github.com:ahmadiq/MovieMgr.git"
     sh "git config user.email admin@stakater.com"
     sh "git config user.name stakater-release"
-    sh 'ls -lah /root/.ssh-git/'
-    sh 'ls -lah /root/.ssh/'
-    sh 'chmod 600 /root/.ssh-git/ssh-key'
-    sh 'chmod 600 /root/.ssh-git/ssh-key.pub'
-    sh 'cp /root/.ssh-git/ssh-key /root/.ssh/id_rsa'
-    sh 'cp /root/.ssh-git/ssh-key.pub /root/.ssh/id_rsa.pub'
-    sh 'chmod 700 /root/.ssh-git'
-    sh 'chmod 700 /root/.ssh'
-    sh 'cat /root/.ssh/config'
+
+//    sh 'chmod 600 /root/.ssh-git/ssh-key'
+//    sh 'chmod 600 /root/.ssh-git/ssh-key.pub'
+//    sh 'cp /root/.ssh-git/ssh-key /root/.ssh/id_rsa'
+//    sh 'cp /root/.ssh-git/ssh-key.pub /root/.ssh/id_rsa.pub'
+//    sh 'chmod 700 /root/.ssh-git'
+//    sh 'chmod 700 /root/.ssh'
+//    sh 'cat /root/.ssh/config'
 
 
         sh "git tag -fa v${canaryVersion} -m 'Release version ${canaryVersion}'"
