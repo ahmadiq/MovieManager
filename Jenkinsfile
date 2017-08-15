@@ -38,53 +38,7 @@ def deploy = false
 // TODO # 4 : run performance tests ( gatling ) and save stats
 // TODO # 5 : the artifacts should be archived & should be browse'able from Jenkins!
 
-//clientsNode(clientsImage: 'fabric8/builder-clients:latest') {
-
-
-//    container(name: 'clients') {
-
-//        stage("checkout") {
-//            checkout scm
-//        }
-
-
-
-//        stage("release") {
-//            push(canaryVersion)
-//        }
-//    }
-//}
-
 mavenNode(mavenImage: 'openjdk:8') {
-
-//    ws ('pipelines'){
-    container(name: 'maven') {
-
-        stage("checkout") {
-            checkout scm
-        }
-
-        stage("push") {
-    //sh "git remote set-url origin git@github.com:ahmadiq/MovieMgr.git"
-    sh "git config user.email admin@stakater.com"
-    sh "git config user.name stakater-release"
-
-    sh 'chmod 600 /root/.ssh-git/ssh-key'
-    sh 'chmod 600 /root/.ssh-git/ssh-key.pub'
-    sh 'chmod 700 /root/.ssh-git'
-
-
-        sh "git tag -fa v${canaryVersion} -m 'Release version ${canaryVersion}'"
-        sh "git push origin v${canaryVersion}"
-        sh "git checkout -b ${canaryVersion}"
-        sh "git push origin ${canaryVersion}"
-        }
-
-//        def release = load 'release.groovy'
-
-//        stage 'release'
-//        release.push(canaryVersion)
-    }
 
 //    container(name: 'maven') {
 
@@ -92,11 +46,22 @@ mavenNode(mavenImage: 'openjdk:8') {
 //            checkout scm
 //        }
 
-
-//        stage("clean") {
-//            sh 'chmod +x mvnw'
-//            sh './mvnw clean'
+//        stage("push") {
 //        }
+
+//    }
+
+    container(name: 'maven') {
+
+        stage("checkout") {
+            checkout scm
+        }
+
+
+        stage("clean") {
+            sh 'chmod +x mvnw'
+            sh './mvnw clean'
+        }
 
 //        stage('install tools') {
 //            sh './mvnw com.github.eirslett:frontend-maven-plugin:install-node-and-yarn -DnodeVersion=v6.11.1 -DyarnVersion=v0.27.5'
@@ -113,12 +78,25 @@ mavenNode(mavenImage: 'openjdk:8') {
 //          }
 //        }
 
-//        stage('Canary Release'){
-//            mavenCanaryRelease {
-//              version = canaryVersion
-//            }
-//            release.push(canaryVersion)
-//        }
+        stage('Canary Release'){
+            sh "git remote set-url origin git@github.com:ahmadiq/MovieMgr.git"
+            sh "git config user.email admin@stakater.com"
+            sh "git config user.name stakater-release"
+
+            sh 'chmod 600 /root/.ssh-git/ssh-key'
+            sh 'chmod 600 /root/.ssh-git/ssh-key.pub'
+            sh 'chmod 700 /root/.ssh-git'
+
+
+            sh "git tag -fa v${canaryVersion} -m 'Release version ${canaryVersion}'"
+            sh "git push origin v${canaryVersion}"
+            sh "git checkout -b ${canaryVersion}"
+            sh "git push origin ${canaryVersion}"
+
+            mavenCanaryRelease {
+              version = canaryVersion
+            }
+        }
 
 //        stage('Integration Testing') {
 //            mavenIntegrationTest {
@@ -136,8 +114,8 @@ mavenNode(mavenImage: 'openjdk:8') {
 //            stashName = label
 //            stash includes: '**/*.yml', name: stashName
 //        }
-//    }
-//}
+    }
+}
 
 
 // TODO: Ensure webhook for jenkins (http://jenkins/sonarqube-webhook/) is added in sonarqube
@@ -149,7 +127,7 @@ mavenNode(mavenImage: 'openjdk:8') {
 //      error "Pipeline aborted due to quality gate failure: ${qg.status}"
 //    }
 //  }
-}
+//}
 
 
 def push(version) {
