@@ -69,11 +69,11 @@ mavenNode(mavenImage: 'openjdk:8') {
     sh "git config user.email admin@stakater.com"
     sh "git config user.name stakater-release"
 
-//    sh 'chmod 600 /root/.ssh-git/ssh-key'
-//    sh 'chmod 600 /root/.ssh-git/ssh-key.pub'
+    sh 'chmod 600 /root/.ssh-git/ssh-key'
+    sh 'chmod 600 /root/.ssh-git/ssh-key.pub'
 //    sh 'cp /root/.ssh-git/ssh-key /root/.ssh/id_rsa'
 //    sh 'cp /root/.ssh-git/ssh-key.pub /root/.ssh/id_rsa.pub'
-//    sh 'chmod 700 /root/.ssh-git'
+    sh 'chmod 700 /root/.ssh-git'
 //    sh 'chmod 700 /root/.ssh'
 //    sh 'cat /root/.ssh/config'
 
