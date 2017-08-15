@@ -1,12 +1,6 @@
 #!/usr/bin/groovy
-def call(body) {
-    def config = [:]
-    body.resolveStrategy = Closure.DELEGATE_FIRST
-    body.delegate = config
-    body()
-
-    def containerName = config.containerName ?: 'clients'
-    def releaseVersion = config.version
+def push(version) {
+    def releaseVersion = version
 
     sh "git remote set-url origin git@github.com:stakater-spring-microservice/MovieManager.git"
     sh "git config user.email admin@stakater.com"
@@ -15,7 +9,7 @@ def call(body) {
     sh 'chmod 600 /root/.ssh-git/ssh-key.pub'
     sh 'chmod 700 /root/.ssh-git'
 
-    container(name: containerName) {
+    container(name: 'clients') {
 
 //    sh "git tag ${env.JOB_NAME}-${config.version}"
 //    sh "git push origin --tags"

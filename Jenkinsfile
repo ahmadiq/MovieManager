@@ -50,13 +50,13 @@ mavenNode(mavenImage: 'openjdk:8') {
             sh './mvnw clean'
         }
 
-        stage('install tools') {
-            sh './mvnw com.github.eirslett:frontend-maven-plugin:install-node-and-yarn -DnodeVersion=v6.11.1 -DyarnVersion=v0.27.5'
-        }
+//        stage('install tools') {
+//            sh './mvnw com.github.eirslett:frontend-maven-plugin:install-node-and-yarn -DnodeVersion=v6.11.1 -DyarnVersion=v0.27.5'
+//        }
 
-        stage('yarn install') {
-            sh './mvnw com.github.eirslett:frontend-maven-plugin:yarn'
-        }
+//        stage('yarn install') {
+//            sh './mvnw com.github.eirslett:frontend-maven-plugin:yarn'
+//        }
 
 //        stage('SonarQube analysis') {
 //          withSonarQubeEnv('sonarqube') {
@@ -65,14 +65,12 @@ mavenNode(mavenImage: 'openjdk:8') {
 //          }
 //        }
 
+        def release = load 'release.groovy'
         stage('Canary Release'){
 //            mavenCanaryRelease {
 //              version = canaryVersion
 //            }
-            def release = load 'release.groovy'
-            release {
-                version = canaryVersion
-            }
+            release.push(canaryVersion)
         }
 
         stage('Integration Testing') {
