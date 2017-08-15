@@ -38,7 +38,6 @@ def deploy = false
 // TODO # 4 : run performance tests ( gatling ) and save stats
 // TODO # 5 : the artifacts should be archived & should be browse'able from Jenkins!
 
-//clientsTemplate {
 mavenNode(mavenImage: 'openjdk:8') {
 
 //    ws ('pipelines'){
@@ -58,7 +57,7 @@ mavenNode(mavenImage: 'openjdk:8') {
             checkout scm
         }
 
-        stage 'release' {
+        stage("release") {
             push(canaryVersion)
         }
 
@@ -108,7 +107,6 @@ mavenNode(mavenImage: 'openjdk:8') {
     }
 }
 
-//}
 
 // TODO: Ensure webhook for jenkins (http://jenkins/sonarqube-webhook/) is added in sonarqube
 // No need to occupy a node
