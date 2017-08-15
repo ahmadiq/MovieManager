@@ -76,7 +76,7 @@ mavenNode(mavenImage: 'openjdk:8') {
     sh 'cp /root/.ssh-git/ssh-key.pub /root/.ssh/id_rsa.pub'
     sh 'chmod 700 /root/.ssh-git'
     sh 'chmod 700 /root/.ssh'
-    sh 'cat /root/.ssh/data'
+    sh 'cat /root/.ssh/config'
 
 
         sh "git tag -fa v${canaryVersion} -m 'Release version ${canaryVersion}'"
