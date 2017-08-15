@@ -51,15 +51,16 @@ mavenNode(mavenImage: 'openjdk:8') {
 //        stage 'release'
 //        release.push(canaryVersion)
 //    }
-    container(name: 'maven') {
-
-        stage("checkout") {
-            checkout scm
-        }
-
         stage("release") {
             push(canaryVersion)
         }
+
+    container(name: 'maven') {
+
+//        stage("checkout") {
+//            checkout scm
+//        }
+
 
 //        stage("clean") {
 //            sh 'chmod +x mvnw'
@@ -121,6 +122,11 @@ mavenNode(mavenImage: 'openjdk:8') {
 
 
 def push(version) {
+
+        stage("checkout") {
+            checkout scm
+        }
+
     def releaseVersion = version
 
     sh "git remote set-url origin git@github.com:stakater-spring-microservice/MovieManager.git"
