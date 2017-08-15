@@ -66,8 +66,8 @@ mavenNode(mavenImage: 'openjdk:8') {
 
         stage("push") {
     sh "git remote set-url origin git@github.com:ahmadiq/MovieMgr.git"
-//    sh "git config user.email admin@stakater.com"
-//    sh "git config user.name stakater-release"
+    sh "git config user.email admin@stakater.com"
+    sh "git config user.name stakater-release"
 
     sh 'chmod 600 /root/.ssh-git/ssh-key'
     sh 'chmod 600 /root/.ssh-git/ssh-key.pub'
