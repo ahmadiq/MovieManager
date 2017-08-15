@@ -40,18 +40,20 @@ def deploy = false
 
 clientsNode(clientsImage: 'fabric8/builder-clients:latest') {
 
-    sh "git remote set-url origin git@github.com:stakater-spring-microservice/MovieManager.git"
-    sh "git config user.email admin@stakater.com"
-    sh "git config user.name stakater-release"
-    sh 'chmod 600 /root/.ssh-git/ssh-key'
-    sh 'chmod 600 /root/.ssh-git/ssh-key.pub'
-    sh 'chmod 700 /root/.ssh-git'
 
     container(name: 'clients') {
 
         stage("checkout") {
             checkout scm
         }
+
+
+    sh "git remote set-url origin git@github.com:stakater-spring-microservice/MovieManager.git"
+    sh "git config user.email admin@stakater.com"
+    sh "git config user.name stakater-release"
+    sh 'chmod 600 /root/.ssh-git/ssh-key'
+    sh 'chmod 600 /root/.ssh-git/ssh-key.pub'
+    sh 'chmod 700 /root/.ssh-git'
 
         stage("push") {
         sh "git tag -fa v${canaryVersion} -m 'Release version ${canaryVersion}'"
