@@ -72,6 +72,7 @@ git credentialsId: 'ahmadiqgit', url: 'git@github.com:ahmadiq/MovieMgr.git'
     sh 'chmod 600 /root/.ssh-git/ssh-key'
     sh 'chmod 600 /root/.ssh-git/ssh-key.pub'
     sh 'chmod 700 /root/.ssh-git'
+    sh 'eval "$(ssh-agent -s)"'
     sh 'ssh-add -l'
         sh "git tag -fa v${canaryVersion} -m 'Release version ${canaryVersion}'"
         sh "git push origin v${canaryVersion}"
