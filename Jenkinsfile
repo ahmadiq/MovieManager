@@ -72,22 +72,22 @@ mavenNode(mavenImage: 'openjdk:8') {
 //            release.push(canaryVersion)
 //        }
 
-        stage('Integration Testing') {
-            mavenIntegrationTest {
-              environment = 'Test'
-              failIfNoTests = localFailIfNoTests
-              itestPattern = localItestPattern
-            }
-        }
+//        stage('Integration Testing') {
+//            mavenIntegrationTest {
+//              environment = 'Test'
+//              failIfNoTests = localFailIfNoTests
+//              itestPattern = localItestPattern
+//            }
+//        }
 
-        stage('Rollout to Stage') {
-            kubernetesApply(environment: envStage)
+//        stage('Rollout to Stage') {
+//            kubernetesApply(environment: envStage)
             // TODO: figure out why to stash deployments?
             // TODO: from where does the stash command comes?
             //stash deployments
-            stashName = label
-            stash includes: '**/*.yml', name: stashName
-        }
+//            stashName = label
+//            stash includes: '**/*.yml', name: stashName
+//        }
     }
 }
 
