@@ -79,20 +79,7 @@ mavenNode(mavenImage: 'openjdk:8') {
 //        }
 
         stage('Canary Release'){
-            sh "git remote set-url origin git@github.com:ahmadiq/MovieMgr.git"
-            sh "git config user.email admin@stakater.com"
-            sh "git config user.name stakater-release"
-
-            sh 'chmod 600 /root/.ssh-git/ssh-key'
-            sh 'chmod 600 /root/.ssh-git/ssh-key.pub'
-            sh 'chmod 700 /root/.ssh-git'
-
-
-            sh "git tag -fa v${canaryVersion} -m 'Release version ${canaryVersion}'"
-            sh "git push origin v${canaryVersion}"
-            sh "git checkout -b ${canaryVersion}"
-            sh "git push origin ${canaryVersion}"
-
+            push(canaryVersion)
             mavenCanaryRelease {
               version = canaryVersion
             }
@@ -132,29 +119,17 @@ mavenNode(mavenImage: 'openjdk:8') {
 
 def push(version) {
 
+            sh "git remote set-url origin git@github.com:ahmadiq/MovieMgr.git"
+            sh "git config user.email admin@stakater.com"
+            sh "git config user.name stakater-release"
 
-    def releaseVersion = version
+            sh 'chmod 600 /root/.ssh-git/ssh-key'
+            sh 'chmod 600 /root/.ssh-git/ssh-key.pub'
+            sh 'chmod 700 /root/.ssh-git'
 
-    sh "git remote set-url origin git@github.com:stakater-spring-microservice/MovieManager.git"
-    sh "git config user.email admin@stakater.com"
-    sh "git config user.name stakater-release"
-    sh 'chmod 600 /root/.ssh-git/ssh-key'
-    sh 'chmod 600 /root/.ssh-git/ssh-key.pub'
-    sh 'chmod 700 /root/.ssh-git'
 
-    container(name: 'clients') {
-
-        stage("checkout") {
-            checkout scm
-        }
-
-//    sh "git tag ${env.JOB_NAME}-${config.version}"
-//    sh "git push origin --tags"
-//        sh "git push origin ${env.JOB_NAME}-${config.version}"
-
-        stage("push") {
-        sh "git tag -fa v${releaseVersion} -m 'Release version ${releaseVersion}'"
-        sh "git push origin v${releaseVersion}"
-        }
-    }
+            sh "git tag -fa v${version} -m 'Release version ${version}'"
+            sh "git push origin v${version}"
+            sh "git checkout -b ${version}"
+            sh "git push origin ${version}"
 }
