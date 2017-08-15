@@ -38,16 +38,29 @@ def deploy = false
 // TODO # 4 : run performance tests ( gatling ) and save stats
 // TODO # 5 : the artifacts should be archived & should be browse'able from Jenkins!
 
-clientsNode(clientsImage: 'fabric8/builder-clients:latest') {
+//clientsNode(clientsImage: 'fabric8/builder-clients:latest') {
 
 
-    container(name: 'clients') {
+//    container(name: 'clients') {
+
+//        stage("checkout") {
+//            checkout scm
+//        }
+
+
+
+//        stage("release") {
+//            push(canaryVersion)
+//        }
+//}
+
+mavenNode(mavenImage: 'openjdk:8') {
+
+    ws ('pipelines'){
 
         stage("checkout") {
             checkout scm
         }
-
-
 
         stage("push") {
     sh "git remote set-url origin git@github.com:ahmadiq/MovieMgr.git"
@@ -61,24 +74,11 @@ clientsNode(clientsImage: 'fabric8/builder-clients:latest') {
         }
     }
 
-//        stage("release") {
-//            push(canaryVersion)
-//        }
-}
-
-//mavenNode(mavenImage: 'openjdk:8') {
-
-//    ws ('pipelines'){
-
-//        stage("checkout") {
-//            checkout scm
-//        }
-
 //        def release = load 'release.groovy'
 
 //        stage 'release'
 //        release.push(canaryVersion)
-//    }
+    }
 
 //    container(name: 'maven') {
 
@@ -143,7 +143,7 @@ clientsNode(clientsImage: 'fabric8/builder-clients:latest') {
 //      error "Pipeline aborted due to quality gate failure: ${qg.status}"
 //    }
 //  }
-//}
+}
 
 
 def push(version) {
