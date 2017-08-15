@@ -58,9 +58,20 @@ mavenNode(mavenImage: 'openjdk:8') {
             sh './mvnw com.github.eirslett:frontend-maven-plugin:yarn'
         }
 
+//        stage('SonarQube analysis') {
+//          withSonarQubeEnv('sonarqube') {
+            // requires SonarQube Scanner for Maven 3.2+
+//            sh "./mvnw -Dsonar.host.url=${env.SONAR_HOST_URL} org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar"
+//          }
+//        }
+
         stage('Canary Release'){
             mavenCanaryRelease {
               version = canaryVersion
+            }
+            def release = load 'release.groovy'
+            release {
+                version = canaryVersion
             }
         }
 
@@ -82,3 +93,14 @@ mavenNode(mavenImage: 'openjdk:8') {
         }
     }
 }
+
+// TODO: Ensure webhook for jenkins (http://jenkins/sonarqube-webhook/) is added in sonarqube
+// No need to occupy a node
+//stage("Quality Gate"){
+//  timeout(time: 1, unit: 'HOURS') { // Just in case something goes wrong, pipeline will be killed after a timeout
+//    def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
+//    if (qg.status != 'OK') {
+//      error "Pipeline aborted due to quality gate failure: ${qg.status}"
+//    }
+//  }
+//}
