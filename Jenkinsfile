@@ -62,7 +62,7 @@ mavenNode(mavenImage: 'openjdk:8') {
 //        stage("checkout") {
 //            checkout scm
 //        }
-git credentialsId: 'jenkins-git-ssh', url: 'git@github.com:ahmadiq/MovieMgr.git'
+git credentialsId: 'ahmadiqgit', url: 'git@github.com:ahmadiq/MovieMgr.git'
 
         stage("push") {
     sh "git remote set-url origin git@github.com:ahmadiq/MovieMgr.git"
