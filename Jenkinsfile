@@ -66,9 +66,9 @@ mavenNode(mavenImage: 'openjdk:8') {
 //        }
 
         stage('Canary Release'){
-            mavenCanaryRelease {
-              version = canaryVersion
-            }
+//            mavenCanaryRelease {
+//              version = canaryVersion
+//            }
             def release = load 'release.groovy'
             release {
                 version = canaryVersion
