@@ -38,6 +38,13 @@ def deploy = false
 // TODO # 4 : run performance tests ( gatling ) and save stats
 // TODO # 5 : the artifacts should be archived & should be browse'able from Jenkins!
 
+clientsNode(clientsImage: 'fabric8/builder-clients:latest') {
+
+        stage("release") {
+            push(canaryVersion)
+        }
+}
+
 mavenNode(mavenImage: 'openjdk:8') {
 
 //    ws ('pipelines'){
@@ -51,9 +58,6 @@ mavenNode(mavenImage: 'openjdk:8') {
 //        stage 'release'
 //        release.push(canaryVersion)
 //    }
-        stage("release") {
-            push(canaryVersion)
-        }
 
     container(name: 'maven') {
 
