@@ -128,8 +128,8 @@ def push(version) {
             sh 'chmod 700 /root/.ssh-git'
 
 
-            sh "git tag -fa v${version} -m 'Release version ${version}'"
-            sh "git push origin v${version}"
-            sh "git checkout -b ${version}"
-            sh "git push origin ${version}"
+//            sh "git tag -fa v${version} -m 'Release version ${version}'"
+//            sh "git push origin v${version}"
+//            sh "git checkout -b ${version}"
+//            sh "git push origin ${version}"
 }
