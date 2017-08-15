@@ -52,6 +52,7 @@ def deploy = false
 //        stage("release") {
 //            push(canaryVersion)
 //        }
+//    }
 //}
 
 mavenNode(mavenImage: 'openjdk:8') {
@@ -72,7 +73,6 @@ mavenNode(mavenImage: 'openjdk:8') {
         sh "git tag -fa v${canaryVersion} -m 'Release version ${canaryVersion}'"
         sh "git push origin v${canaryVersion}"
         }
-    }
 
 //        def release = load 'release.groovy'
 
