@@ -94,9 +94,9 @@ mavenNode(mavenImage: 'openjdk:8') {
 clientsNode {
     ws ('pipelines'){
 
-        stage("checkout") {
-            checkout scm
-        }
+//        stage("checkout") {
+//            checkout scm
+//        }
 
         def release = load 'release.groovy'
 
