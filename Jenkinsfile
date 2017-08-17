@@ -79,7 +79,7 @@ mavenNode(mavenImage: 'openjdk:8') {
 //        }
 
         stage('Canary Release'){
-            push(canaryVersion)
+//            push(canaryVersion)
             mavenCanaryRelease {
               version = canaryVersion
             }
