@@ -26,7 +26,7 @@ def canaryVersion = "${versionPrefix}.${env.BUILD_NUMBER}"
 def fabric8Console = "${env.FABRIC8_CONSOLE ?: ''}"
 def utils = new io.fabric8.Utils()
 def label = "buildpod.${env.JOB_NAME}.${env.BUILD_NUMBER}".replace('-', '_').replace('/', '_')
-def projectGit = "git@github.com:ahmadiq/MovieMgr.git"
+def gitRepo = "git@github.com:ahmadiq/MovieMgr.git"
 
 def envStage = utils.environmentNamespace('stage')
 def envProd = utils.environmentNamespace('run')
@@ -82,7 +82,7 @@ mavenNode(mavenImage: 'openjdk:8') {
         stage('Canary Release'){
             mavenCanaryRelease {
               version = canaryVersion
-              projectGit = projectGit
+              projectGit = gitRepo
             }
         }
 
