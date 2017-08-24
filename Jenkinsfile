@@ -68,18 +68,19 @@ mavenNode(mavenImage: 'openjdk:8') {
 
         stage('Release'){
           timeout(time: 1, unit: 'HOURS') { // Just in case something goes wrong, pipeline will be killed after a timeout
-          def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
-          if (qg.status != 'OK') {
-            //push release git branch and tag
-            gitRelease {
-              project = gitRepo
+            def qg = waitForQualityGate() // Reuse taskId previously collected by withSonarQubeEnv
+            if (qg.status != 'OK') {
+              //push release git branch and tag
+              gitRelease {
+                project = gitRepo
+              }
+              error "Pipeline aborted due to quality gate failure: ${qg.status}"
             }
-            error "Pipeline aborted due to quality gate failure: ${qg.status}"
-          }
-          else {
-            //push release git branch and tag
-            gitRelease {
-              project = gitRepo
+            else {
+              //push release git branch and tag
+              gitRelease {
+                project = gitRepo
+              }
             }
           }
         }
