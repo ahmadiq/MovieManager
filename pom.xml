@@ -60,6 +60,7 @@
 
         <sonar.language>java</sonar.language>
         <sonar.exclusions>src/main/webapp/content/**/*.*, src/main/webapp/bower_components/**/*.*, src/main/webapp/i18n/*.js, target/www/**/*.*</sonar.exclusions>
+        <sonar.java.binaries>classes, target/classes</sonar.java.binaries>
 
         <sonar.issue.ignore.multicriteria>S3437,UndocumentedApi,BoldAndItalicTagsCheck</sonar.issue.ignore.multicriteria>
 
